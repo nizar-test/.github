@@ -1,0 +1,26 @@
+name: Droid Tag (Reusable)
+
+on:
+  workflow_call:
+    secrets:
+      factory_api_key:
+        required: true
+
+jobs:
+  droid:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - name: Run Droid Exec
+        uses: Factory-AI/droid-action@v3
+        with:
+          factory_api_key: ${{ secrets.factory_api_key }}
